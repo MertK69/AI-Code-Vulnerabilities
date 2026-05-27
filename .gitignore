@@ -1,0 +1,19 @@
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Dataset cache
+data/
+
+# Results
+results/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
