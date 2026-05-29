@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import shutil
 import subprocess
 import sys
@@ -13,15 +14,38 @@ from .base import BaseSastRunner, SastFinding
 
 logger = logging.getLogger(__name__)
 
-# Language-specific security packs (no login required)
-_LANG_CONFIG = {
-    "python": "p/python",
-    "java": "p/java",
-    "javascript": "p/javascript",
-    "typescript": "p/typescript",
-    "c": "p/c",
-    "cpp": "p/cpp",
+_RULES_DIR = Path(__file__).parent / "rules" / "purplellama"
+
+# Packs run for every language
+_UNIVERSAL_PACKS = ["p/security-audit", "p/owasp-top-ten"]
+
+# Language-specific packs (language name → list of pack IDs)
+_LANG_PACKS = {
+    "python":     ["p/python"],
+    "java":       ["p/java"],
+    "javascript": ["p/javascript"],
+    "typescript": ["p/typescript"],
+    "c":          ["p/c"],
+    "cpp":        ["p/cpp"],
 }
+
+_PURPLELLAMA_LANG_DIR = {
+    "python": "python",
+    "java": "java",
+    "javascript": "javascript",
+    "c": "c",
+    "php": "php",
+}
+
+
+def _configs_for(language: str) -> list[str]:
+    configs = _UNIVERSAL_PACKS + _LANG_PACKS.get(language, [])
+    lang_dir = _PURPLELLAMA_LANG_DIR.get(language)
+    if lang_dir:
+        local_dir = _RULES_DIR / lang_dir
+        if local_dir.exists():
+            configs.append(str(local_dir))
+    return configs
 
 _LANG_EXT = {
     "python": ".py",
@@ -51,23 +75,21 @@ class SemgrepRunner(BaseSastRunner):
     def is_available(self) -> bool:
         return self._bin is not None
 
-    def analyze(self, code: str, language: str, extra_rule: Optional[str] = None) -> list[SastFinding]:
+    def analyze(self, code: str, language: str, **kwargs) -> list[SastFinding]:
         ext = _LANG_EXT.get(language, ".txt")
-        config = _LANG_CONFIG.get(language, "p/security-audit")
 
         with tempfile.TemporaryDirectory() as tmpdir:
             src = Path(tmpdir) / f"target{ext}"
             src.write_text(code, encoding="utf-8")
 
-            # Run language pack; optionally also run a dataset-specific rule
-            configs = [config]
-            if extra_rule:
-                configs.append(extra_rule)
-
             all_findings: list[SastFinding] = []
-            for cfg in configs:
-                findings = self._run_config(src, cfg, language)
-                all_findings.extend(findings)
+            seen: set[tuple] = set()
+            for cfg in _configs_for(language):
+                for f in self._run_config(src, cfg, language):
+                    key = (f.rule_id, f.line)
+                    if key not in seen:
+                        seen.add(key)
+                        all_findings.append(f)
 
             return all_findings
 
@@ -111,6 +133,11 @@ class SemgrepRunner(BaseSastRunner):
             metadata = extra.get("metadata", {})
             cwes = metadata.get("cwe", [])
             cwe = cwes[0] if isinstance(cwes, list) and cwes else (cwes if isinstance(cwes, str) else "")
+            # Prefer cwe_id (e.g. "CWE-330") over cwe freetext (e.g. "Use of insufficiently random values")
+            if not re.search(r"CWE-\d+", cwe, re.IGNORECASE):
+                cwe_id = metadata.get("cwe_id", "")
+                if cwe_id:
+                    cwe = cwe_id
             severity = (extra.get("severity") or metadata.get("confidence") or "INFO").upper()
             message = extra.get("message", "")
             line = result.get("start", {}).get("line", 0)

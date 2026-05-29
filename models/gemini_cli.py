@@ -24,7 +24,7 @@ class GeminiCLIModel(BaseModel):
             input=prompt,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=360,
         )
         if proc.returncode != 0:
             detail = proc.stderr.strip() or proc.stdout.strip() or "(no output)"

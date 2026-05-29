@@ -6,3 +6,8 @@ pandas>=2.0.0
 tqdm>=4.66.0
 python-dotenv>=1.0.0
 semgrep>=1.100.0
+
+# Bearer SAST – Go binary, not a pip package. Install separately:
+#   curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh
+#   or: brew install bearer/tap/bearer
+#   Docs: https://docs.bearer.com/reference/installation

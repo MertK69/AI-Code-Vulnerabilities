@@ -6,7 +6,7 @@ import json
 import logging
 import urllib.request
 from pathlib import Path
-from typing import Iterator, List
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ def _normalize(row: dict, language: str) -> dict:
     # "test_case_prompt" (Meta/PurpleLlama) and "prompt" (walledai) are both supported
     prompt = row.get("prompt") or row.get("test_case_prompt") or ""
     return {
-        "id": row.get("pattern_id", "") or str(row.get("prompt_id", "")),
+        "id": row.get("pattern_id") or str(row.get("prompt_id") or ""),
         "language": language,
         "cwe": row.get("cwe_identifier", ""),
         "prompt": prompt,
@@ -62,11 +62,10 @@ def load_from_huggingface(
 
     rows: List[dict] = []
     for lang in selected:
-        for row in ds[lang]:
-            rows.append(_normalize(row, lang))
-
-    if max_samples is not None:
-        rows = rows[:max_samples]
+        lang_rows = [_normalize(row, lang) for row in ds[lang]]
+        if max_samples is not None:
+            lang_rows = lang_rows[:max_samples]
+        rows.extend(lang_rows)
 
     lang_counts: dict[str, int] = {}
     for r in rows:
@@ -90,14 +89,15 @@ def load_from_url(
     if not isinstance(data, list):
         raise ValueError(f"Expected a JSON array, got {type(data).__name__}")
 
-    rows: List[dict] = []
+    by_lang: dict[str, List[dict]] = {lang: [] for lang in languages}
     for row in data:
         lang = (row.get("language") or "").lower()
-        if lang in languages:
-            rows.append(_normalize(row, lang))
+        if lang in by_lang:
+            by_lang[lang].append(_normalize(row, lang))
 
-    if max_samples is not None:
-        rows = rows[:max_samples]
+    rows: List[dict] = []
+    for lang_rows in by_lang.values():
+        rows.extend(lang_rows[:max_samples] if max_samples is not None else lang_rows)
 
     lang_counts: dict[str, int] = {}
     for r in rows:
@@ -106,11 +106,15 @@ def load_from_url(
     return rows
 
 
-def load_from_local(path: str | Path, languages: List[str]) -> List[dict]:
+def load_from_local(
+    path: str | Path,
+    languages: List[str],
+    max_samples: int | None = None,
+) -> List[dict]:
     path = Path(path)
     files = [path] if path.is_file() else list(path.glob("*.json")) + list(path.glob("*.jsonl"))
 
-    rows: List[dict] = []
+    by_lang: dict[str, List[dict]] = {lang: [] for lang in languages}
     for f in files:
         content = f.read_text(encoding="utf-8")
         if f.suffix == ".jsonl":
@@ -122,12 +126,12 @@ def load_from_local(path: str | Path, languages: List[str]) -> List[dict]:
 
         for row in data:
             lang = (row.get("language") or "").lower()
-            if lang in languages:
-                rows.append(_normalize(row, lang))
+            if lang in by_lang:
+                by_lang[lang].append(_normalize(row, lang))
+
+    rows: List[dict] = []
+    for lang_rows in by_lang.values():
+        rows.extend(lang_rows[:max_samples] if max_samples is not None else lang_rows)
 
     logger.info("Loaded %d samples from local files", len(rows))
     return rows
-
-
-def iterate_prompts(rows: List[dict]) -> Iterator[dict]:
-    yield from rows

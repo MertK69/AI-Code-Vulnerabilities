@@ -23,14 +23,13 @@ class ClaudeCLIModel(BaseModel):
         cmd = [self._bin, "--print"]
         if self.config.model_id:
             cmd += ["--model", self.config.model_id]
-        cmd.append(prompt)
 
         proc = subprocess.run(
             cmd,
-            stdin=subprocess.DEVNULL,
+            input=prompt,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=360,
             env=self._env,
         )
         if proc.returncode != 0:

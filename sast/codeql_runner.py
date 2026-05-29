@@ -27,11 +27,20 @@ _CODEQL_LANG = {
     "java": "java",
 }
 
-# Security query suites shipped with CodeQL
-_QUERY_SUITE = {
-    "python": "python-security-and-quality.qls",
-    "java": "java-security-and-quality.qls",
-}
+_PACK_BASE = Path.home() / ".codeql" / "packages"
+
+
+def _find_suite(lang: str) -> str:
+    """Resolve the newest installed security-only suite for a language."""
+    pack_dir = _PACK_BASE / f"codeql/{lang}-queries"
+    if pack_dir.exists():
+        versions = sorted(pack_dir.iterdir(), reverse=True)
+        for v in versions:
+            for suite_name in (f"{lang}-security-extended.qls", f"{lang}-security-and-quality.qls"):
+                suite = v / "codeql-suites" / suite_name
+                if suite.exists():
+                    return str(suite)
+    return f"codeql/{lang}-queries:codeql-suites/{lang}-security-extended.qls"
 
 
 class CodeQLRunner(BaseSastRunner):
@@ -64,7 +73,7 @@ class CodeQLRunner(BaseSastRunner):
 
         ext = _LANG_EXT[language]
         codeql_lang = _CODEQL_LANG[language]
-        suite = _QUERY_SUITE[language]
+        suite = _find_suite(language)
 
         with tempfile.TemporaryDirectory() as tmpdir:
             src_dir = Path(tmpdir) / "src"
