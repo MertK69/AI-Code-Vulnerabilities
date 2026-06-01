@@ -10,7 +10,7 @@ load_dotenv()
 @dataclass
 class ModelConfig:
     name: str
-    provider: str  # "anthropic" | "openai" | "gemini-api" | "claude-cli" | "gemini-cli"
+    provider: str  # "anthropic" | "openai" | "gemini-api" | "claude-cli" | "gemini-cli" | "agy-cli"
     model_id: str
     max_tokens: int = 2048
     temperature: float = 0.0
@@ -98,11 +98,13 @@ class EvalConfig:
 
 
 CLI_MODELS: list[ModelConfig] = [
-    ModelConfig(name="claude-opus-4-6",         provider="claude-cli",  model_id="claude-opus-4-6"),
-    ModelConfig(name="claude-sonnet-4-6",        provider="claude-cli",  model_id="claude-sonnet-4-6"),
-    ModelConfig(name="gemini-2.5-flash",         provider="gemini-cli",  model_id="gemini-2.5-flash"),
-    ModelConfig(name="gemini-3.1-pro-preview",   provider="gemini-cli",  model_id="gemini-3.1-pro-preview"),
-    ModelConfig(name="gemini-2.5-pro",           provider="gemini-cli",  model_id="gemini-2.5-pro"),
+    ModelConfig(name="claude-opus-4-6",              provider="claude-cli",  model_id="claude-opus-4-6"),
+    ModelConfig(name="claude-sonnet-4-6",             provider="claude-cli",  model_id="claude-sonnet-4-6"),
+    ModelConfig(name="gemini-2.5-flash",              provider="gemini-cli",  model_id="gemini-2.5-flash"),
+    ModelConfig(name="gemini-3.1-pro-preview",        provider="gemini-cli",  model_id="gemini-3.1-pro-preview"),
+    ModelConfig(name="gemini-2.5-pro",                provider="gemini-cli",  model_id="gemini-2.5-pro"),
+    ModelConfig(name="agy-gemini-3.5-flash-medium",   provider="agy-cli",     model_id="Gemini 3.5 Flash (Medium)"),
+    ModelConfig(name="agy-gemini-3.1-pro-high",       provider="agy-cli",     model_id="Gemini 3.1 Pro (High)"),
 ]
 
 _GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/openai/"

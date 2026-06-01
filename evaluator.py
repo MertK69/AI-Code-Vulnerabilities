@@ -12,7 +12,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 from config import EvalConfig, ModelConfig, SASTConfig, apply_security_wrapper
-from models import BaseModel, ClaudeModel, GeminiAPIModel, ClaudeCLIModel, GeminiCLIModel
+from models import BaseModel, ClaudeModel, GeminiAPIModel, ClaudeCLIModel, GeminiCLIModel, AntigravityCLIModel
 from sast import BaseSastRunner, CodeQLRunner, SemgrepRunner, BearerRunner, SastFinding
 
 logger = logging.getLogger(__name__)
@@ -38,6 +38,8 @@ def _build_model(cfg: ModelConfig) -> BaseModel:
         return ClaudeCLIModel(cfg)
     if cfg.provider == "gemini-cli":
         return GeminiCLIModel(cfg)
+    if cfg.provider == "agy-cli":
+        return AntigravityCLIModel(cfg)
     raise ValueError(f"Unknown provider: {cfg.provider}")
 
 
