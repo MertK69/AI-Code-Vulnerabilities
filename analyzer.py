@@ -26,12 +26,23 @@ def _is_secure(row: dict) -> bool:
 
 
 def _iter_findings(row: dict):
+    # Prefer the already-deduplicated list; fall back to per-tool block for old files.
+    deduped = row.get("deduped_findings")
+    if deduped is not None:
+        yield from deduped
+        return
     block = row.get("findings", {})
     if isinstance(block, list):  # old flat format
         yield from block
     else:
+        seen: set[tuple] = set()
         for fs in block.values():
-            yield from fs
+            for f in fs:
+                m = re.search(r"CWE-\d+", f.get("cwe", ""), re.IGNORECASE)
+                key = (m.group(0).upper() if m else "", f.get("line", -1))
+                if key not in seen:
+                    seen.add(key)
+                    yield f
 
 
 def _cwe_of_finding(f: dict) -> str:
