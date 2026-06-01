@@ -32,6 +32,7 @@ def load_from_huggingface(
     subset: str,
     languages: List[str],
     max_samples: int | None = None,
+    sample_offset: int = 0,
     token: str | None = None,
     cache_dir: str = "data",
 ) -> List[dict]:
@@ -63,6 +64,7 @@ def load_from_huggingface(
     rows: List[dict] = []
     for lang in selected:
         lang_rows = [_normalize(row, lang) for row in ds[lang]]
+        lang_rows = lang_rows[sample_offset:]
         if max_samples is not None:
             lang_rows = lang_rows[:max_samples]
         rows.extend(lang_rows)
@@ -78,6 +80,7 @@ def load_from_url(
     url: str,
     languages: List[str],
     max_samples: int | None = None,
+    sample_offset: int = 0,
 ) -> List[dict]:
     logger.info("Downloading dataset from %s ...", url)
     try:
@@ -97,6 +100,7 @@ def load_from_url(
 
     rows: List[dict] = []
     for lang_rows in by_lang.values():
+        lang_rows = lang_rows[sample_offset:]
         rows.extend(lang_rows[:max_samples] if max_samples is not None else lang_rows)
 
     lang_counts: dict[str, int] = {}
@@ -110,6 +114,7 @@ def load_from_local(
     path: str | Path,
     languages: List[str],
     max_samples: int | None = None,
+    sample_offset: int = 0,
 ) -> List[dict]:
     path = Path(path)
     files = [path] if path.is_file() else list(path.glob("*.json")) + list(path.glob("*.jsonl"))
@@ -131,6 +136,7 @@ def load_from_local(
 
     rows: List[dict] = []
     for lang_rows in by_lang.values():
+        lang_rows = lang_rows[sample_offset:]
         rows.extend(lang_rows[:max_samples] if max_samples is not None else lang_rows)
 
     logger.info("Loaded %d samples from local files", len(rows))

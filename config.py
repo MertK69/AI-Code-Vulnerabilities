@@ -91,6 +91,7 @@ def apply_security_wrapper(prompt: str) -> str:
 class EvalConfig:
     languages: list[str] = field(default_factory=lambda: ["python", "java"])
     max_samples: int | None = None
+    sample_offset: int = 0
     output_dir: str = "results"
     dataset: DatasetConfig = field(default_factory=lambda: DATASETS[0])
     hf_token: str | None = field(default_factory=lambda: os.getenv("HF_TOKEN"))

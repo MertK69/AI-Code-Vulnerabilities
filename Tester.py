@@ -39,7 +39,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--max-samples", type=int, default=None,
-        help="Maximum number of prompts per language per evaluation",
+        help="Maximum number of prompts per language",
+    )
+    parser.add_argument(
+        "--sample-offset", type=int, default=0,
+        help="Skip the first N samples per language (use with --max-samples for a range, e.g. --sample-offset 50 --max-samples 50 = samples 50-99)",
     )
     parser.add_argument(
         "--languages", nargs="+", default=None,
@@ -214,12 +218,34 @@ def select_languages_interactive() -> list[str]:
         return selected
 
 
-def select_samples_interactive() -> int | None:
-    """Ask how many samples to test. Returns None for all."""
-    print("┌─ Sample Count ──────────────────────────────────────────┐")
-    print("│  How many prompts per language?                         │")
+def _read_int(prompt: str, min_val: int = 0, default: int | None = None) -> int:
+    """Read a non-negative integer from stdin, with optional default."""
+    while True:
+        try:
+            suffix = f" [{default}]" if default is not None else ""
+            raw = input(f"  {prompt}{suffix}: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nAborted.")
+            sys.exit(0)
+        if not raw and default is not None:
+            return default
+        try:
+            n = int(raw)
+        except ValueError:
+            print("  Invalid input – enter a number.")
+            continue
+        if n < min_val:
+            print(f"  Must be >= {min_val}.")
+            continue
+        return n
+
+
+def select_samples_interactive() -> tuple[int, int | None]:
+    """Ask which sample range to test. Returns (offset, max_samples)."""
+    print("┌─ Sample Range ──────────────────────────────────────────┐")
+    print("│  Which prompts per language?                            │")
     print("│  [1] All samples                                        │")
-    print("│  [2] Custom number                                      │")
+    print("│  [2] Custom range  (start index + count)                │")
     print("└─────────────────────────────────────────────────────────┘")
 
     while True:
@@ -231,25 +257,14 @@ def select_samples_interactive() -> int | None:
 
         if raw == "1":
             print("  Running with all samples.\n")
-            return None
+            return 0, None
 
         if raw == "2":
-            while True:
-                try:
-                    num_raw = input("  Enter number: ").strip()
-                except (EOFError, KeyboardInterrupt):
-                    print("\nAborted.")
-                    sys.exit(0)
-                try:
-                    n = int(num_raw)
-                except ValueError:
-                    print("  Invalid input – enter a number.")
-                    continue
-                if n <= 0:
-                    print("  Must be greater than 0.")
-                    continue
-                print(f"  Running with {n} samples per language.\n")
-                return n
+            offset = _read_int("Start index (0-based)", min_val=0, default=0)
+            count  = _read_int("Number of samples", min_val=1)
+            end = offset + count - 1
+            print(f"  Running samples {offset}–{end} ({count} per language).\n")
+            return offset, count
 
         print("  Enter 1 or 2.")
 
@@ -447,12 +462,14 @@ def main() -> int:
 
     # Sample count: --all-samples or --max-samples skip interactive prompt
     if args.all_samples:
+        sample_offset = 0
         max_samples = None
         print("  Running with all samples.\n")
-    elif args.max_samples is not None:
+    elif args.max_samples is not None or args.sample_offset:
+        sample_offset = args.sample_offset
         max_samples = args.max_samples
     else:
-        max_samples = select_samples_interactive()
+        sample_offset, max_samples = select_samples_interactive()
 
     # SAST selection: CLI flags skip interactive menu
     if args.no_semgrep or args.no_codeql or args.no_bearer:
@@ -477,6 +494,7 @@ def main() -> int:
     eval_cfg = EvalConfig(
         languages=languages,
         max_samples=max_samples,
+        sample_offset=sample_offset,
         output_dir=args.output_dir or EVAL.output_dir,
         dataset=dataset_cfg,
         hf_token=EVAL.hf_token,
@@ -486,13 +504,14 @@ def main() -> int:
     # Load dataset
     if args.local_data:
         from dataset_loader import load_from_local
-        prompts = load_from_local(args.local_data, eval_cfg.languages, eval_cfg.max_samples)
+        prompts = load_from_local(args.local_data, eval_cfg.languages, eval_cfg.max_samples, eval_cfg.sample_offset)
     elif dataset_cfg.source == "url":
         from dataset_loader import load_from_url
         prompts = load_from_url(
             url=dataset_cfg.url,
             languages=eval_cfg.languages,
             max_samples=eval_cfg.max_samples,
+            sample_offset=eval_cfg.sample_offset,
         )
     else:
         from dataset_loader import load_from_huggingface
@@ -501,6 +520,7 @@ def main() -> int:
             subset=dataset_cfg.hf_subset,
             languages=eval_cfg.languages,
             max_samples=eval_cfg.max_samples,
+            sample_offset=eval_cfg.sample_offset,
             token=eval_cfg.hf_token,
             cache_dir="data",
         )
@@ -513,7 +533,8 @@ def main() -> int:
     from collections import Counter
     lang_dist = Counter(p["language"] for p in prompts)
     cwe_dist = Counter(p["cwe"] for p in prompts)
-    print(f"Dataset loaded: {len(prompts)} prompts")
+    offset_info = f"  (offset {eval_cfg.sample_offset})" if eval_cfg.sample_offset else ""
+    print(f"Dataset loaded: {len(prompts)} prompts{offset_info}")
     print(f"  Languages:   {dict(lang_dist)}")
     print(f"  Unique CWEs: {len(cwe_dist)}")
     print(f"  Top 5 CWEs:  {cwe_dist.most_common(5)}")
