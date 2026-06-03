@@ -7,7 +7,7 @@ __pycache__/
 
 # Dataset cache
 data/
-
+cache
 # Results
 results/
 

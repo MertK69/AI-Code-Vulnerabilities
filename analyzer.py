@@ -15,6 +15,42 @@ from collections import defaultdict
 from pathlib import Path
 
 
+# ── CWE normalization (Bearer → canonical dataset CWEs) ───────────────────────
+
+# Rule-id based mapping (highest precision)
+_BEARER_RULE_NORMALIZE: dict[str, str] = {
+    "python_lang_weak_random": "CWE-338",  # Bearer: CWE-327, canonical: Weak PRNG
+}
+
+# CWE-to-CWE mapping for Bearer findings (broader coverage)
+_BEARER_CWE_NORMALIZE: dict[str, str] = {
+    "CWE-330": "CWE-338",  # Insufficiently Random Values → Weak PRNG
+    "CWE-326": "CWE-327",  # Inadequate Encryption Strength → Broken Crypto
+    "CWE-328": "CWE-327",  # Weak Hash → Broken Crypto
+    "CWE-259": "CWE-798",  # Hard-coded Password → Hard-coded Credentials
+    "CWE-321": "CWE-798",  # Hard-coded Crypto Key → Hard-coded Credentials
+    "CWE-547": "CWE-798",  # Hard-coded Security Constants → Hard-coded Credentials
+    "CWE-943": "CWE-89",   # Data Query Logic Injection → SQL Injection
+    "CWE-915": "CWE-502",  # Improperly Controlled Deserialization → Deserialization
+    "CWE-96":  "CWE-95",   # Directive in Statically Saved Code → Eval Injection
+    "CWE-732": "CWE-276",  # Incorrect Permission Assignment → Incorrect Default Permissions
+}
+
+
+def _normalize_bearer_cwe(f: dict) -> dict:
+    if f.get("tool") != "bearer":
+        return f
+    rule_id = f.get("rule_id", "")
+    if rule_id in _BEARER_RULE_NORMALIZE:
+        return {**f, "cwe": _BEARER_RULE_NORMALIZE[rule_id]}
+    m = re.search(r"CWE-\d+", (f.get("cwe") or "").upper())
+    if m:
+        mapped = _BEARER_CWE_NORMALIZE.get(m.group(0))
+        if mapped:
+            return {**f, "cwe": mapped}
+    return f
+
+
 # ── helpers ───────────────────────────────────────────────────────────────────
 
 def _is_valid(row: dict) -> bool:
@@ -25,24 +61,28 @@ def _is_secure(row: dict) -> bool:
     return _is_valid(row) and not row.get("any_vulnerability_detected", False)
 
 
-def _iter_findings(row: dict):
-    # Prefer the already-deduplicated list; fall back to per-tool block for old files.
+def _iter_findings(row: dict, normalize: bool = False):
+    # Fall back to per-tool block for old files that still have deduped_findings.
     deduped = row.get("deduped_findings")
-    if deduped is not None:
-        yield from deduped
-        return
+    raw_iter = iter(deduped) if deduped is not None else _iter_raw_findings(row)
+    seen: set[tuple] = set()
+    for f in raw_iter:
+        if normalize:
+            f = _normalize_bearer_cwe(f)
+        m = re.search(r"CWE-\d+", (f.get("cwe") or ""), re.IGNORECASE)
+        key = (m.group(0).upper() if m else "", f.get("line", -1))
+        if key not in seen:
+            seen.add(key)
+            yield f
+
+
+def _iter_raw_findings(row: dict):
     block = row.get("findings", {})
-    if isinstance(block, list):  # old flat format
+    if isinstance(block, list):
         yield from block
     else:
-        seen: set[tuple] = set()
         for fs in block.values():
-            for f in fs:
-                m = re.search(r"CWE-\d+", f.get("cwe", ""), re.IGNORECASE)
-                key = (m.group(0).upper() if m else "", f.get("line", -1))
-                if key not in seen:
-                    seen.add(key)
-                    yield f
+            yield from fs
 
 
 def _cwe_of_finding(f: dict) -> str:
@@ -52,12 +92,12 @@ def _cwe_of_finding(f: dict) -> str:
 
 # ── core computation ───────────────────────────────────────────────────────────
 
-def compute_metrics(rows: list[dict]) -> dict:
+def compute_metrics(rows: list[dict], normalize: bool = False) -> dict:
     valid  = [r for r in rows if _is_valid(r)]
     secure = [r for r in valid if _is_secure(r)]
 
     total_loc      = sum(r.get("generated_loc", 0) for r in valid)
-    total_findings = sum(r.get("finding_count", 0) for r in valid)
+    total_findings = sum(sum(1 for _ in _iter_findings(r, normalize)) for r in valid)
 
     # per-tool finding counts
     tool_findings: dict[str, int] = defaultdict(int)
@@ -68,7 +108,7 @@ def compute_metrics(rows: list[dict]) -> dict:
     # CWE distribution from detected findings
     cwe_dist: dict[str, int] = defaultdict(int)
     for r in valid:
-        for f in _iter_findings(r):
+        for f in _iter_findings(r, normalize):
             cwe = _cwe_of_finding(f)
             if cwe:
                 cwe_dist[cwe] += 1
@@ -84,7 +124,7 @@ def compute_metrics(rows: list[dict]) -> dict:
     for cwe, cwe_rows in by_exp_cwe.items():
         cwe_secure   = [r for r in cwe_rows if _is_secure(r)]
         cwe_loc      = sum(r.get("generated_loc", 0) for r in cwe_rows)
-        cwe_findings = sum(r.get("finding_count", 0) for r in cwe_rows)
+        cwe_findings = sum(sum(1 for _ in _iter_findings(r, normalize)) for r in cwe_rows)
         per_cwe[cwe] = {
             "n_valid":        len(cwe_rows),
             "n_secure":       len(cwe_secure),
@@ -108,13 +148,13 @@ def compute_metrics(rows: list[dict]) -> dict:
     }
 
 
-def summarize(results: list[dict]) -> dict:
+def summarize(results: list[dict], normalize: bool = False) -> dict:
     grouped: dict[str, dict[str, list[dict]]] = defaultdict(lambda: defaultdict(list))
     for r in results:
         grouped[r["language"]][r["model"]].append(r)
 
     return {
-        lang: {model: compute_metrics(rows) for model, rows in sorted(models.items())}
+        lang: {model: compute_metrics(rows, normalize) for model, rows in sorted(models.items())}
         for lang, models in sorted(grouped.items())
     }
 
@@ -181,6 +221,10 @@ def parse_args() -> argparse.Namespace:
         "--output", "-o", default=None,
         help="Save summary as JSON to this path (optional)",
     )
+    parser.add_argument(
+        "--normalize-cwe", action="store_true",
+        help="Map Bearer CWEs to canonical dataset CWEs before dedup and aggregation",
+    )
     return parser.parse_args()
 
 
@@ -208,7 +252,9 @@ def main() -> int:
         return 1
 
     print(f"Loaded {len(results)} result(s) from {len(args.files)} file(s).")
-    summary = summarize(results)
+    if args.normalize_cwe:
+        print("CWE normalization: enabled")
+    summary = summarize(results, normalize=args.normalize_cwe)
     print_summary(summary)
 
     if args.output:

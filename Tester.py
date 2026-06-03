@@ -550,7 +550,15 @@ def main() -> int:
 
     from evaluator import Evaluator
     evaluator = Evaluator(model_configs, eval_cfg, SAST)
-    evaluator.run(prompts)
+    result_path = evaluator.run(prompts)
+
+    from analyzer import summarize, print_summary
+    import json
+    data = json.loads(result_path.read_text(encoding="utf-8"))
+    print("\n" + "═" * 72)
+    print("  ANALYZER RESULTS")
+    print("═" * 72)
+    print_summary(summarize(data))
 
     return 0
 

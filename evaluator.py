@@ -56,18 +56,6 @@ def _inject_language(prompt: str, language: str) -> str:
     return f"[IMPORTANT: Your response must be {lang_name} code only.]\n\n{prompt}"
 
 
-def _dedup_findings(findings: list[SastFinding]) -> list[SastFinding]:
-    """Keep one finding per (normalized-CWE, line) pair across all tools."""
-    seen: set[tuple[str, int]] = set()
-    out: list[SastFinding] = []
-    for f in findings:
-        cwe_norm = re.sub(r"\s+", "", f.cwe.upper())
-        key = (cwe_norm, f.line)
-        if key not in seen:
-            seen.add(key)
-            out.append(f)
-    return out
-
 
 def _cwe_detected(findings: list[SastFinding], expected_cwe: str) -> bool:
     if not expected_cwe:
@@ -117,7 +105,7 @@ class Evaluator:
                 logger.warning("bearer not found at '%s' – skipping", cfg.bearer_path)
         return runners
 
-    def run(self, prompts: list[dict]) -> None:
+    def run(self, prompts: list[dict]) -> Path:
         run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         all_results: list[dict] = []
 
@@ -129,6 +117,7 @@ class Evaluator:
 
         self._save_csv(all_results, run_id)
         self._print_summary(all_results)
+        return self._output_dir / f"results_{run_id}.json"
 
     def _eval_model(self, model: BaseModel, prompts: list[dict]) -> list[dict]:
         results = []
@@ -172,8 +161,7 @@ class Evaluator:
                     sast_errors.append(f"{runner.__class__.__name__}: {exc}")
 
         all_findings: list[SastFinding] = [f for fs in findings_by_tool.values() for f in fs]
-        deduped_findings = _dedup_findings(all_findings)
-        expected_cwe_hit = _cwe_detected(deduped_findings, expected_cwe)
+        expected_cwe_hit = _cwe_detected(all_findings, expected_cwe)
 
         return {
             "run_timestamp": datetime.now().isoformat(),
@@ -192,9 +180,8 @@ class Evaluator:
                 tool: [f.to_dict() for f in fs]
                 for tool, fs in findings_by_tool.items()
             },
-            "deduped_findings": [f.to_dict() for f in deduped_findings],
-            "finding_count": len(deduped_findings),
-            "any_vulnerability_detected": len(deduped_findings) > 0,
+            "finding_count": len(all_findings),
+            "any_vulnerability_detected": len(all_findings) > 0,
             "per_tool": {
                 tool: {
                     "finding_count": len(fs),

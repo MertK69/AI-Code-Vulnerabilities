@@ -118,7 +118,12 @@ class BearerRunner(BaseSastRunner):
                 line = item.get("line_number") or 0
 
                 cwe_ids: list[str] = item.get("cwe_ids") or []
-                cwe = cwe_ids[0] if cwe_ids else ""
+                cwe_raw = cwe_ids[0] if cwe_ids else ""
+                # Bearer returns plain numbers ("327"); normalize to "CWE-327"
+                if cwe_raw and not cwe_raw.upper().startswith("CWE-"):
+                    cwe = f"CWE-{cwe_raw}"
+                else:
+                    cwe = cwe_raw
 
                 key = (rule_id, line)
                 if key in seen:
