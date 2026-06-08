@@ -11,6 +11,9 @@ cache
 # Results
 results/
 
+# Scratch / debug scripts
+scratch/
+
 # IDE
 .idea/
 .vscode/
