@@ -558,7 +558,7 @@ def main() -> int:
     print("\n" + "═" * 72)
     print("  ANALYZER RESULTS")
     print("═" * 72)
-    print_summary(summarize(data))
+    print_summary(summarize(data, normalize=True))
 
     return 0
 

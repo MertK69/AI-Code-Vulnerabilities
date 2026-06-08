@@ -99,7 +99,7 @@ class EvalConfig:
 
 
 CLI_MODELS: list[ModelConfig] = [
-    ModelConfig(name="claude-opus-4-6",              provider="claude-cli",  model_id="claude-opus-4-6"),
+    ModelConfig(name="claude-opus-4-8",              provider="claude-cli",  model_id="claude-opus-4-8"),
     ModelConfig(name="claude-sonnet-4-6",             provider="claude-cli",  model_id="claude-sonnet-4-6"),
     ModelConfig(name="gemini-2.5-flash",              provider="gemini-cli",  model_id="gemini-2.5-flash"),
     ModelConfig(name="gemini-3.1-pro-preview",        provider="gemini-cli",  model_id="gemini-3.1-pro-preview"),
@@ -111,7 +111,7 @@ CLI_MODELS: list[ModelConfig] = [
 _GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/openai/"
 
 API_MODELS: list[ModelConfig] = [
-    ModelConfig(name="claude-opus-4-6",    provider="anthropic",  model_id="claude-opus-4-6"),
+    ModelConfig(name="claude-opus-4-8",    provider="anthropic",  model_id="claude-opus-4-8"),
     ModelConfig(name="claude-sonnet-4-6",  provider="anthropic",  model_id="claude-sonnet-4-6"),
     ModelConfig(name="gemini-2.5-flash",   provider="gemini-api", model_id="gemini-2.5-flash",
                 api_base_url=_GEMINI_API_BASE),

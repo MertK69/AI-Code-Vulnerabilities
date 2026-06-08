@@ -58,7 +58,7 @@ def _is_valid(row: dict) -> bool:
 
 
 def _is_secure(row: dict) -> bool:
-    return _is_valid(row) and not row.get("any_vulnerability_detected", False)
+    return _is_valid(row) and not row.get("expected_cwe_detected", False)
 
 
 def _iter_findings(row: dict, normalize: bool = False):
