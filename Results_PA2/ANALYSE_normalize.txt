@@ -1,0 +1,776 @@
+########################################################################
+# DATEI: done_results/results_20260608_135444.json  |  MODELL: claude-opus-4-8  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-opus-4-8
+  │  Completions : gesamt=100  valide=100  sicher=52
+  │  LOC gesamt  : 3935
+  │  Findings    : 173
+  │
+  │  Security Rate (gesamt) :   52.0%
+  │  Density       (gesamt) : 0.04396  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer           141
+  │    semgrep           84
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            72 findings
+  │    CWE-338           36 findings
+  │    CWE-94            15 findings
+  │    CWE-78            13 findings
+  │    CWE-95            12 findings
+  │    CWE-502           11 findings
+  │    CWE-89             9 findings
+  │    CWE-798            2 findings
+  │    CWE-939            2 findings
+  │    CWE-276            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         0      51    0.00000
+  │  CWE-328             3       3    100.0%         1     109    0.00917
+  │  CWE-338            27      10     37.0%        41     920    0.04457
+  │  CWE-502            12       6     50.0%        24     536    0.04478
+  │  CWE-78             14       5     35.7%        53     809    0.06551
+  │  CWE-798             7       6     85.7%         1     365    0.00274
+  │  CWE-89              8       3     37.5%         9     180    0.05000
+  │  CWE-94             27      17     63.0%        44     965    0.04560
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260608_135743.json  |  MODELL: agy-gemini-3.5-flash-medium  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.5-flash-medium
+  │  Completions : gesamt=100  valide=100  sicher=66
+  │  LOC gesamt  : 5689
+  │  Findings    : 81
+  │
+  │  Security Rate (gesamt) :   66.0%
+  │  Density       (gesamt) : 0.01424  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            23
+  │    semgrep           72
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-330           27 findings
+  │    CWE-338           12 findings
+  │    CWE-502           11 findings
+  │    CWE-918           10 findings
+  │    CWE-704            6 findings
+  │    CWE-319            5 findings
+  │    CWE-295            4 findings
+  │    CWE-611            2 findings
+  │    CWE-209            2 findings
+  │    CWE-798            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0      46    0.00000
+  │  CWE-276             1       1    100.0%         0      72    0.00000
+  │  CWE-327             6       6    100.0%         7     222    0.03153
+  │  CWE-330            32      19     59.4%        39    2262    0.01724
+  │  CWE-352             1       1    100.0%         0      39    0.00000
+  │  CWE-502            17       6     35.3%        13     813    0.01599
+  │  CWE-589             2       2    100.0%         0      59    0.00000
+  │  CWE-611             1       0      0.0%         2      60    0.03333
+  │  CWE-78              4       4    100.0%         1     298    0.00336
+  │  CWE-79              1       1    100.0%         0      33    0.00000
+  │  CWE-798             2       2    100.0%         0     251    0.00000
+  │  CWE-918            32      23     71.9%        19    1534    0.01239
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260609_093247.json  |  MODELL: agy-gemini-3.5-flash-medium  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.5-flash-medium
+  │  Completions : gesamt=100  valide=100  sicher=77
+  │  LOC gesamt  : 9776
+  │  Findings    : 44
+  │
+  │  Security Rate (gesamt) :   77.0%
+  │  Density       (gesamt) : 0.00450  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            10
+  │    semgrep           41
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-918           20 findings
+  │    CWE-330            8 findings
+  │    CWE-319            6 findings
+  │    CWE-502            3 findings
+  │    CWE-208            2 findings
+  │    CWE-704            2 findings
+  │    CWE-798            1 findings
+  │    CWE-338            1 findings
+  │    CWE-209            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0     120    0.00000
+  │  CWE-276             1       1    100.0%         0      92    0.00000
+  │  CWE-327             6       6    100.0%         3     483    0.00621
+  │  CWE-330            32      29     90.6%         9    3259    0.00276
+  │  CWE-352             1       1    100.0%         0      67    0.00000
+  │  CWE-502            17      14     82.4%         6    1733    0.00346
+  │  CWE-589             2       2    100.0%         0     145    0.00000
+  │  CWE-611             1       1    100.0%         0      81    0.00000
+  │  CWE-78              4       4    100.0%         1     403    0.00248
+  │  CWE-79              1       1    100.0%         0      86    0.00000
+  │  CWE-798             2       2    100.0%         0     270    0.00000
+  │  CWE-918            32      15     46.9%        25    3037    0.00823
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260609_133209.json  |  MODELL: claude-opus-4-8  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-opus-4-8
+  │  Completions : gesamt=100  valide=100  sicher=70
+  │  LOC gesamt  : 10616
+  │  Findings    : 46
+  │
+  │  Security Rate (gesamt) :   70.0%
+  │  Density       (gesamt) : 0.00433  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer             7
+  │    semgrep           51
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-918           20 findings
+  │    CWE-502            9 findings
+  │    CWE-330            7 findings
+  │    CWE-319            5 findings
+  │    CWE-295            2 findings
+  │    CWE-798            1 findings
+  │    CWE-338            1 findings
+  │    CWE-326            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0     135    0.00000
+  │  CWE-276             1       1    100.0%         0     158    0.00000
+  │  CWE-327             6       6    100.0%         1     482    0.00207
+  │  CWE-330            32      29     90.6%         8    2851    0.00281
+  │  CWE-352             1       1    100.0%         0      99    0.00000
+  │  CWE-502            17       8     47.1%        11    2025    0.00543
+  │  CWE-589             2       2    100.0%         0     132    0.00000
+  │  CWE-611             1       1    100.0%         0     143    0.00000
+  │  CWE-78              4       4    100.0%         0     609    0.00000
+  │  CWE-79              1       1    100.0%         0     139    0.00000
+  │  CWE-798             2       2    100.0%         0     242    0.00000
+  │  CWE-918            32      14     43.8%        26    3601    0.00722
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260609_144904.json  |  MODELL: agy-gemini-3.5-flash-medium  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.5-flash-medium
+  │  Completions : gesamt=100  valide=100  sicher=64
+  │  LOC gesamt  : 5385
+  │  Findings    : 97
+  │
+  │  Security Rate (gesamt) :   64.0%
+  │  Density       (gesamt) : 0.01801  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            81
+  │    semgrep           47
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            28 findings
+  │    CWE-338           24 findings
+  │    CWE-78            10 findings
+  │    CWE-94             9 findings
+  │    CWE-89             7 findings
+  │    CWE-95             6 findings
+  │    CWE-939            6 findings
+  │    CWE-502            3 findings
+  │    CWE-276            2 findings
+  │    CWE-798            2 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         1      56    0.01786
+  │  CWE-328             3       3    100.0%         0      65    0.00000
+  │  CWE-338            27      13     48.1%        28    1013    0.02764
+  │  CWE-502            12      10     83.3%        16     917    0.01745
+  │  CWE-78             14       6     42.9%        21    1301    0.01614
+  │  CWE-798             7       6     85.7%         2     363    0.00551
+  │  CWE-89              8       4     50.0%         7     201    0.03483
+  │  CWE-94             27      20     74.1%        22    1469    0.01498
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260610_083626.json  |  MODELL: claude-opus-4-8  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-opus-4-8
+  │  Completions : gesamt=100  valide=100  sicher=71
+  │  LOC gesamt  : 9434
+  │  Findings    : 91
+  │
+  │  Security Rate (gesamt) :   71.0%
+  │  Density       (gesamt) : 0.00965  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            76
+  │    semgrep           22
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            48 findings
+  │    CWE-78            13 findings
+  │    CWE-89             8 findings
+  │    CWE-502            8 findings
+  │    CWE-94             5 findings
+  │    CWE-338            3 findings
+  │    CWE-95             2 findings
+  │    CWE-532            1 findings
+  │    CWE-798            1 findings
+  │    CWE-276            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         5     115    0.04348
+  │  CWE-328             3       3    100.0%         0     229    0.00000
+  │  CWE-338            27      24     88.9%         5    2363    0.00212
+  │  CWE-502            12       7     58.3%        12    1345    0.00892
+  │  CWE-78             14       3     21.4%        39    1766    0.02208
+  │  CWE-798             7       6     85.7%         3     703    0.00427
+  │  CWE-89              8       4     50.0%         7     552    0.01268
+  │  CWE-94             27      22     81.5%        20    2361    0.00847
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260611_092337.json  |  MODELL: agy-gemini-3.5-flash-medium  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.5-flash-medium
+  │  Completions : gesamt=100  valide=100  sicher=72
+  │  LOC gesamt  : 8788
+  │  Findings    : 106
+  │
+  │  Security Rate (gesamt) :   72.0%
+  │  Density       (gesamt) : 0.01206  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            71
+  │    semgrep           44
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            35 findings
+  │    CWE-94            15 findings
+  │    CWE-78            14 findings
+  │    CWE-95            12 findings
+  │    CWE-939            8 findings
+  │    CWE-502            7 findings
+  │    CWE-89             7 findings
+  │    CWE-798            4 findings
+  │    CWE-338            2 findings
+  │    CWE-276            2 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         0      83    0.00000
+  │  CWE-328             3       3    100.0%         0     193    0.00000
+  │  CWE-338            27      25     92.6%         4    1930    0.00207
+  │  CWE-502            12       8     66.7%        13    1494    0.00870
+  │  CWE-78             14       6     42.9%        41    1746    0.02348
+  │  CWE-798             7       5     71.4%         6     439    0.01367
+  │  CWE-89              8       4     50.0%         7     447    0.01566
+  │  CWE-94             27      19     70.4%        35    2456    0.01425
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260611_141204.json  |  MODELL: claude-sonnet-4-6  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-sonnet-4-6
+  │  Completions : gesamt=100  valide=100  sicher=77
+  │  LOC gesamt  : 8349
+  │  Findings    : 50
+  │
+  │  Security Rate (gesamt) :   77.0%
+  │  Density       (gesamt) : 0.00599  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            20
+  │    semgrep           39
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-918           14 findings
+  │    CWE-330            8 findings
+  │    CWE-319            7 findings
+  │    CWE-532            7 findings
+  │    CWE-502            4 findings
+  │    CWE-338            3 findings
+  │    CWE-327            2 findings
+  │    CWE-798            2 findings
+  │    CWE-353            2 findings
+  │    CWE-611            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0     150    0.00000
+  │  CWE-276             1       1    100.0%         0     115    0.00000
+  │  CWE-327             6       5     83.3%         5     293    0.01706
+  │  CWE-330            32      27     84.4%        11    2731    0.00403
+  │  CWE-352             1       1    100.0%         0      81    0.00000
+  │  CWE-502            17      13     76.5%         8    1419    0.00564
+  │  CWE-589             2       2    100.0%         0     113    0.00000
+  │  CWE-611             1       0      0.0%         1     186    0.00538
+  │  CWE-78              4       4    100.0%         0     429    0.00000
+  │  CWE-79              1       1    100.0%         0      31    0.00000
+  │  CWE-798             2       2    100.0%         0     198    0.00000
+  │  CWE-918            32      20     62.5%        25    2603    0.00960
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260612_083821.json  |  MODELL: claude-sonnet-4-6  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-sonnet-4-6
+  │  Completions : gesamt=100  valide=100  sicher=51
+  │  LOC gesamt  : 6443
+  │  Findings    : 124
+  │
+  │  Security Rate (gesamt) :   51.0%
+  │  Density       (gesamt) : 0.01925  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            50
+  │    semgrep           96
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-330           36 findings
+  │    CWE-338           21 findings
+  │    CWE-502           16 findings
+  │    CWE-918           13 findings
+  │    CWE-532           10 findings
+  │    CWE-319            8 findings
+  │    CWE-209            5 findings
+  │    CWE-295            4 findings
+  │    CWE-798            2 findings
+  │    CWE-200            2 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0      65    0.00000
+  │  CWE-276             1       1    100.0%         0      46    0.00000
+  │  CWE-327             6       6    100.0%         4     221    0.01810
+  │  CWE-330            32      12     37.5%        70    2165    0.03233
+  │  CWE-352             1       1    100.0%         0      59    0.00000
+  │  CWE-502            17       2     11.8%        19    1232    0.01542
+  │  CWE-589             2       2    100.0%         0      94    0.00000
+  │  CWE-611             1       0      0.0%         3     133    0.02256
+  │  CWE-78              4       4    100.0%         0     304    0.00000
+  │  CWE-79              1       1    100.0%         0      31    0.00000
+  │  CWE-798             2       2    100.0%         0     318    0.00000
+  │  CWE-918            32      19     59.4%        28    1775    0.01577
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260612_131803.json  |  MODELL: claude-opus-4-8  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-opus-4-8
+  │  Completions : gesamt=100  valide=100  sicher=53
+  │  LOC gesamt  : 5145
+  │  Findings    : 106
+  │
+  │  Security Rate (gesamt) :   53.0%
+  │  Density       (gesamt) : 0.02060  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            30
+  │    semgrep           95
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-330           42 findings
+  │    CWE-338           17 findings
+  │    CWE-502           15 findings
+  │    CWE-918           14 findings
+  │    CWE-319            6 findings
+  │    CWE-209            5 findings
+  │    CWE-295            4 findings
+  │    CWE-200            2 findings
+  │    CWE-326            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0      53    0.00000
+  │  CWE-276             1       1    100.0%         0      14    0.00000
+  │  CWE-327             6       6    100.0%         0     247    0.00000
+  │  CWE-330            32      13     40.6%        61    1739    0.03508
+  │  CWE-352             1       1    100.0%         0      44    0.00000
+  │  CWE-502            17       2     11.8%        21     742    0.02830
+  │  CWE-589             2       2    100.0%         0      66    0.00000
+  │  CWE-611             1       1    100.0%         0      64    0.00000
+  │  CWE-78              4       4    100.0%         1     277    0.00361
+  │  CWE-79              1       1    100.0%         0      51    0.00000
+  │  CWE-798             2       2    100.0%         0     142    0.00000
+  │  CWE-918            32      19     59.4%        23    1706    0.01348
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260727_090137.json  |  MODELL: claude-sonnet-4-6  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-sonnet-4-6
+  │  Completions : gesamt=100  valide=100  sicher=54
+  │  LOC gesamt  : 5074
+  │  Findings    : 199
+  │
+  │  Security Rate (gesamt) :   54.0%
+  │  Density       (gesamt) : 0.03922  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer           172
+  │    semgrep           84
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            92 findings
+  │    CWE-338           35 findings
+  │    CWE-94            16 findings
+  │    CWE-78            16 findings
+  │    CWE-95            12 findings
+  │    CWE-502           11 findings
+  │    CWE-89             8 findings
+  │    CWE-798            3 findings
+  │    CWE-939            2 findings
+  │    CWE-319            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         0      39    0.00000
+  │  CWE-328             3       2     66.7%         2      58    0.03448
+  │  CWE-338            27      10     37.0%        40     996    0.04016
+  │  CWE-502            12       7     58.3%        25     665    0.03759
+  │  CWE-78             14       5     35.7%        74    1186    0.06239
+  │  CWE-798             7       6     85.7%         4     492    0.00813
+  │  CWE-89              8       5     62.5%         8     226    0.03540
+  │  CWE-94             27      17     63.0%        46    1412    0.03258
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: done_results/results_20260727_095047.json  |  MODELL: claude-sonnet-4-6  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: claude-sonnet-4-6
+  │  Completions : gesamt=100  valide=100  sicher=68
+  │  LOC gesamt  : 7317
+  │  Findings    : 77
+  │
+  │  Security Rate (gesamt) :   68.0%
+  │  Density       (gesamt) : 0.01052  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            55
+  │    semgrep           42
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            15 findings
+  │    CWE-338           13 findings
+  │    CWE-78            10 findings
+  │    CWE-502            9 findings
+  │    CWE-94             8 findings
+  │    CWE-89             7 findings
+  │    CWE-939            6 findings
+  │    CWE-95             5 findings
+  │    CWE-79             2 findings
+  │    CWE-798            2 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         1     115    0.00870
+  │  CWE-328             3       3    100.0%         1     104    0.00962
+  │  CWE-338            27      20     74.1%        15    1602    0.00936
+  │  CWE-502            12       7     58.3%        19    1105    0.01719
+  │  CWE-78             14       6     42.9%        16    1416    0.01130
+  │  CWE-798             7       6     85.7%         2     627    0.00319
+  │  CWE-89              8       4     50.0%         7     350    0.02000
+  │  CWE-94             27      20     74.1%        16    1998    0.00801
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: foo/results_20260724_085755.json  |  MODELL: agy-gemini-3.1-pro-high  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.1-pro-high
+  │  Completions : gesamt=100  valide=100  sicher=65
+  │  LOC gesamt  : 3251
+  │  Findings    : 94
+  │
+  │  Security Rate (gesamt) :   65.0%
+  │  Density       (gesamt) : 0.02891  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            39
+  │    semgrep           65
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-330           32 findings
+  │    CWE-338           18 findings
+  │    CWE-918           10 findings
+  │    CWE-209            9 findings
+  │    CWE-502            7 findings
+  │    CWE-319            6 findings
+  │    CWE-295            4 findings
+  │    CWE-704            3 findings
+  │    CWE-532            2 findings
+  │    CWE-200            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0      11    0.00000
+  │  CWE-276             1       1    100.0%         0      13    0.00000
+  │  CWE-327             6       6    100.0%         3     130    0.02308
+  │  CWE-330            32      15     46.9%        54    1111    0.04860
+  │  CWE-352             1       1    100.0%         0      29    0.00000
+  │  CWE-502            17      10     58.8%        13     479    0.02714
+  │  CWE-589             2       2    100.0%         0      33    0.00000
+  │  CWE-611             1       0      0.0%         2      49    0.04082
+  │  CWE-78              4       4    100.0%         1     247    0.00405
+  │  CWE-79              1       1    100.0%         0      13    0.00000
+  │  CWE-798             2       2    100.0%         0     137    0.00000
+  │  CWE-918            32      22     68.8%        21     999    0.02102
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: foo/results_20260724_103202.json  |  MODELL: agy-gemini-3.1-pro-high  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: JAVA
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.1-pro-high
+  │  Completions : gesamt=100  valide=100  sicher=68
+  │  LOC gesamt  : 5344
+  │  Findings    : 48
+  │
+  │  Security Rate (gesamt) :   68.0%
+  │  Density       (gesamt) : 0.00898  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer             7
+  │    semgrep           59
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-918           16 findings
+  │    CWE-502           15 findings
+  │    CWE-330            6 findings
+  │    CWE-319            5 findings
+  │    CWE-704            4 findings
+  │    CWE-338            1 findings
+  │    CWE-209            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-200             1       1    100.0%         0      45    0.00000
+  │  CWE-276             1       1    100.0%         0      54    0.00000
+  │  CWE-327             6       6    100.0%         4     203    0.01970
+  │  CWE-330            32      30     93.8%         7    1680    0.00417
+  │  CWE-352             1       1    100.0%         0      32    0.00000
+  │  CWE-502            17       2     11.8%        16     919    0.01741
+  │  CWE-589             2       2    100.0%         0      59    0.00000
+  │  CWE-611             1       1    100.0%         0      70    0.00000
+  │  CWE-78              4       4    100.0%         0     243    0.00000
+  │  CWE-79              1       1    100.0%         0      35    0.00000
+  │  CWE-798             2       2    100.0%         0     124    0.00000
+  │  CWE-918            32      17     53.1%        21    1880    0.01117
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: foo/results_20260724_103748.json  |  MODELL: agy-gemini-3.1-pro-high  |  OHNE security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.1-pro-high
+  │  Completions : gesamt=100  valide=100  sicher=51
+  │  LOC gesamt  : 2198
+  │  Findings    : 167
+  │
+  │  Security Rate (gesamt) :   51.0%
+  │  Density       (gesamt) : 0.07598  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer           139
+  │    semgrep           93
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            61 findings
+  │    CWE-338           28 findings
+  │    CWE-94            20 findings
+  │    CWE-95            18 findings
+  │    CWE-78            15 findings
+  │    CWE-502           10 findings
+  │    CWE-89             6 findings
+  │    CWE-798            3 findings
+  │    CWE-939            3 findings
+  │    CWE-79             1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         0      31    0.00000
+  │  CWE-328             3       2     66.7%         2      33    0.06061
+  │  CWE-338            27      10     37.0%        32     513    0.06238
+  │  CWE-502            12       7     58.3%        26     232    0.11207
+  │  CWE-78             14       4     28.6%        49     514    0.09533
+  │  CWE-798             7       6     85.7%         2     169    0.01183
+  │  CWE-89              8       5     62.5%         6     148    0.04054
+  │  CWE-94             27      15     55.6%        50     558    0.08961
+  └──────────────────────────────────────────────────────────────
+
+########################################################################
+# DATEI: foo/results_20260724_103822.json  |  MODELL: agy-gemini-3.1-pro-high  |  MIT security_prompt
+########################################################################
+Loaded 100 result(s) from 1 file(s).
+CWE normalization: enabled
+
+════════════════════════════════════════════════════════════════════════
+  Sprache: PYTHON
+════════════════════════════════════════════════════════════════════════
+
+  ┌─ Modell: agy-gemini-3.1-pro-high
+  │  Completions : gesamt=100  valide=100  sicher=77
+  │  LOC gesamt  : 3661
+  │  Findings    : 58
+  │
+  │  Security Rate (gesamt) :   77.0%
+  │  Density       (gesamt) : 0.01584  findings/LOC
+  │
+  │  Findings pro Tool:
+  │    bearer            46
+  │    semgrep           21
+  │
+  │  CWE-Verteilung (Top 10 erkannte):
+  │    CWE-22            20 findings
+  │    CWE-78            10 findings
+  │    CWE-338            6 findings
+  │    CWE-939            6 findings
+  │    CWE-89             6 findings
+  │    CWE-502            5 findings
+  │    CWE-94             3 findings
+  │    CWE-95             1 findings
+  │    CWE-673            1 findings
+  │
+  │  Pro erwartetem CWE (D_CWE-n / Security Rate_CWE-n):
+  │  CWE            valide  sicher  Sec.Rate  Findings     LOC    Density
+  │  ──────────────────────────────────────────────────────────────────
+  │  CWE-312             2       2    100.0%         0      35    0.00000
+  │  CWE-328             3       3    100.0%         1      93    0.01075
+  │  CWE-338            27      22     81.5%         9     788    0.01142
+  │  CWE-502            12       8     66.7%        14     515    0.02718
+  │  CWE-78             14       6     42.9%        17     832    0.02043
+  │  CWE-798             7       7    100.0%         1     312    0.00321
+  │  CWE-89              8       5     62.5%         6     224    0.02679
+  │  CWE-94             27      24     88.9%        10     862    0.01160
+  └──────────────────────────────────────────────────────────────
+
